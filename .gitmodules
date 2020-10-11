@@ -1,3 +1,6 @@
 [submodule "googletest"]
 	path = googletest
 	url = https://github.com/google/googletest.git
+[submodule "VersionHelper"]
+	path = VersionHelper
+	url = https://github.com/rokoDev/VersionHelper
