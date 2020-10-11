@@ -25,6 +25,7 @@ matrix:
          - MATRIX_EVAL="CC=clang && CXX=clang++"
          
 before_install:
+  - git checkout master
   - git submodule update --init --recursive
   - eval "${MATRIX_EVAL}"
 
