@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION ${cmake_version})
 
-set(ProjectName ${AppName}_tests)
+set(ProjectName ${ProjectName}_tests)
 project(${ProjectName})
 
 if (WIN32)
@@ -13,7 +13,7 @@ endif (WIN32)
 
 macro(package_add_test TESTNAME)
     add_executable(${TESTNAME} ${ARGN})
-    target_link_libraries(${TESTNAME} gtest gmock gtest_main)
+    target_link_libraries(${TESTNAME} gtest gmock gtest_main versionInfo)
     add_test(NAME ${TESTNAME} COMMAND ${TESTNAME})
     set_target_properties(${TESTNAME} PROPERTIES FOLDER tests)
 endmacro()

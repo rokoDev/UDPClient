@@ -2,11 +2,23 @@ set(cmake_version 3.13.1)
 
 cmake_minimum_required(VERSION ${cmake_version})
 
-set(AppName "UDPClient")
+set(ProjectName "UDPClient")
 
-project(${AppName} 
-		VERSION 1.0.0.0
+project(${ProjectName} 
+		VERSION 1.0.0
 		LANGUAGES CXX)
+
+list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/VersionHelper")
+include(VersionInfoUtils)
+m_generate_version_info_sources(
+	CPP_NAMESPACE ${ProjectName}
+    OUT_H_DIR ${CMAKE_CURRENT_BINARY_DIR}/include/VersionInfo
+    OUT_CPP_DIR ${CMAKE_CURRENT_BINARY_DIR}/src/VersionInfo
+    MAJOR ${${ProjectName}_VERSION_MAJOR}
+    MINOR ${${ProjectName}_VERSION_MINOR}
+    PATCH ${${ProjectName}_VERSION_PATCH}
+    TWEAK ${${ProjectName}_VERSION_TWEAK}
+    FULL_VERSION ${${ProjectName}_VERSION})
 		
 message(STATUS "cur c++ compiler is:${CMAKE_CXX_COMPILER}")
 
@@ -48,3 +60,4 @@ add_subdirectory(tests)
 
 # Create application
 add_executable("udpclient" ${SOURCES} ${HEADERS})
+target_link_libraries("udpclient" PUBLIC versionInfo)
