@@ -20,6 +20,7 @@ matrix:
   fast_finish: true
 
 install:
+    - git checkout master
     - git submodule update --init --recursive
 
 before_build:
