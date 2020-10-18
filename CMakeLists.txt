@@ -10,15 +10,7 @@ project(${ProjectName}
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/VersionHelper")
 include(VersionInfoUtils)
-m_generate_version_info_sources(
-	CPP_NAMESPACE ${ProjectName}
-    OUT_H_DIR ${CMAKE_CURRENT_BINARY_DIR}/include/VersionInfo
-    OUT_CPP_DIR ${CMAKE_CURRENT_BINARY_DIR}/src/VersionInfo
-    MAJOR ${${ProjectName}_VERSION_MAJOR}
-    MINOR ${${ProjectName}_VERSION_MINOR}
-    PATCH ${${ProjectName}_VERSION_PATCH}
-    TWEAK ${${ProjectName}_VERSION_TWEAK}
-    FULL_VERSION ${${ProjectName}_VERSION})
+m_generate_version_info_sources_by_project_name(MY_PROJECT_NAME ${ProjectName})
 		
 message(STATUS "cur c++ compiler is:${CMAKE_CXX_COMPILER}")
 
