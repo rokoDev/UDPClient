@@ -1,11 +1,11 @@
-set(cmake_version 3.13.1)
+set(cmake_version 3.18.4)
 
 cmake_minimum_required(VERSION ${cmake_version})
 
 set(ProjectName "UDPClient")
 
 project(${ProjectName} 
-		VERSION 1.0.0
+		VERSION 0.1.0
 		LANGUAGES CXX)
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/VersionHelper")
