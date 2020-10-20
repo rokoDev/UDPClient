@@ -14,16 +14,16 @@ m_generate_version_info_sources_by_project_name(MY_PROJECT_NAME ${ProjectName})
 		
 message(STATUS "cur c++ compiler is:${CMAKE_CXX_COMPILER}")
 
-set(CMAKE_CXX_STANDARD 14)
+set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
 if(MSVC)
-    set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS} /std:c++14 /Od /W4 /WX")
-    set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS} /std:c++14 /O2 /W4 /WX")
+    set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS} /std:c++17 /Od /W4 /WX")
+    set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS} /std:c++17 /O2 /W4 /WX")
 endif(MSVC)
 
 if (UNIX)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14 -O0 -fPIC -Wall -Wextra")
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17 -O0 -fPIC -Wall -Wextra")
 endif (UNIX)
 
 set(INCLUDE_DIRS
