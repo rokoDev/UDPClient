@@ -12,19 +12,22 @@ list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/VersionHelper")
 include(VersionInfoUtils)
 m_generate_version_info_sources_by_project_name(MY_PROJECT_NAME ${ProjectName})
 		
-message(STATUS "cur c++ compiler is:${CMAKE_CXX_COMPILER}")
+message(STATUS "CMAKE_CXX_COMPILER: ${CMAKE_CXX_COMPILER}")
+message(STATUS "CMAKE_CXX_COMPILER_ID: ${CMAKE_CXX_COMPILER_ID}")
+message(STATUS "CMAKE_CXX_COMPILER_FRONTEND_VARIANT: ${CMAKE_CXX_COMPILER_FRONTEND_VARIANT}")
 
 set(CMAKE_CXX_STANDARD 17)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 
-if(MSVC)
-    set(CMAKE_CXX_FLAGS_DEBUG "${CMAKE_CXX_FLAGS} /std:c++17 /Od /W4 /WX")
-    set(CMAKE_CXX_FLAGS_RELEASE "${CMAKE_CXX_FLAGS} /std:c++17 /O2 /W4 /WX")
-endif(MSVC)
-
-if (UNIX)
-    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17 -O0 -fPIC -Wall -Wextra")
-endif (UNIX)
+if(CMAKE_CXX_COMPILER_ID STREQUAL Clang)
+  if(CMAKE_CXX_COMPILER_FRONTEND_VARIANT STREQUAL MSVC)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} /std:c++17 /WX /permissive- /W4")
+  elseif(CMAKE_CXX_COMPILER_FRONTEND_VARIANT STREQUAL GNU)
+    set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17 -Werror -pedantic-errors -Wall -Wextra -Wconversion -Wsign-conversion -Wshadow")
+  endif()
+elseif(CMAKE_CXX_COMPILER_ID STREQUAL AppleClang)
+  set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17 -Werror -pedantic-errors -Wall -Wextra -Wconversion -Wsign-conversion -Wshadow")
+endif()
 
 set(INCLUDE_DIRS
 	${CMAKE_SOURCE_DIR}/include

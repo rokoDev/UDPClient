@@ -7,17 +7,15 @@ branches:
 matrix:
    include:
      - os: linux
-       sudo: required
-       dist: trusty
-       compiler: gcc
+       name: Linux Clang 10
+       dist: focal
+       compiler: clang
        addons:
          apt:
-           sources:
-             - ubuntu-toolchain-r-test
            packages:
-             - g++-8
+             - clang-10
        env: 
-         - MATRIX_EVAL="CC=gcc-8 && CXX=g++-8"
+         - MATRIX_EVAL="CC=clang-10 && CXX=clang++-10"
      - os: osx
        osx_image: xcode10.1
        compiler: clang
