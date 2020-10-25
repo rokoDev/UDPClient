@@ -8,6 +8,8 @@
 //#include <sys/socket.h>
 //#include <unistd.h>
 
+#include <fmt/core.h>
+
 #include <iostream>
 
 #include "GitInfo.h"
@@ -25,13 +27,13 @@
 
 void printVersionInfo()
 {
-    std::cout << "Version: " << UDPClient::Version::str() << '\n';
-    std::cout << "branch: " << UDPClient::GitInfo::branch() << '\n';
-    std::cout << "SHA1: " << UDPClient::GitInfo::SHA1() << '\n';
+    fmt::print("Version: {}\n", UDPClient::Version::str());
+    fmt::print("branch: {}\n", UDPClient::GitInfo::branch());
+    fmt::print("SHA1: {}\n", UDPClient::GitInfo::SHA1());
     const std::string isDirty = UDPClient::GitInfo::isDirty()
                                     ? std::string("true")
                                     : std::string("false");
-    std::cout << "IS_DIRTY: " << isDirty << std::endl;
+    fmt::print("IS_DIRTY: {}\n", isDirty);
 }
 
 int main(void)

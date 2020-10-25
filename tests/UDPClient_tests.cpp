@@ -6,6 +6,8 @@
 //  Copyright © 2016 roko. All rights reserved.
 //
 
+#include <fmt/core.h>
+
 #include "GitInfo.h"
 #include "UDPClient.h"
 #include "Version.h"
@@ -13,20 +15,19 @@
 
 TEST(TestUDPClientVersion, GitInfoTest)
 {
-    std::cout << "[          ] branch: " << UDPClient::GitInfo::branch()
-              << '\n';
-    std::cout << "[          ] SHA1: " << UDPClient::GitInfo::SHA1() << '\n';
+    fmt::print("[          ] branch: {}\n", UDPClient::GitInfo::branch());
+    fmt::print("[          ] SHA1: {}\n", UDPClient::GitInfo::SHA1());
     const std::string isDirty = UDPClient::GitInfo::isDirty()
                                     ? std::string("true")
                                     : std::string("false");
-    std::cout << "[          ] IS_DIRTY: " << isDirty << std::endl;
+    fmt::print("[          ] IS_DIRTY: {}\n", isDirty);
     ASSERT_EQ(0, 0);
 }
 
 TEST(TestUDPClientVersion, VersionTest)
 {
-    std::cout << "[          ] UDPClient Version: " << UDPClient::Version::str()
-              << std::endl;
+    fmt::print("[          ] UDPClient Version: {}\n",
+               UDPClient::Version::str());
     ASSERT_EQ(0, 0);
 }
 

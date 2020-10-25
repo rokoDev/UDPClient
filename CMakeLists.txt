@@ -46,13 +46,14 @@ set(SOURCES
 	${SOURCE_DIR}/SocketAddress.cpp
 	)
 
-include_directories("${INCLUDE_DIRS}")
+include_directories("${INCLUDE_DIRS}" "${CMAKE_CURRENT_LIST_DIR}/fmt/include")
 
 # Setup testing
 enable_testing()
+add_subdirectory(fmt)
 add_subdirectory(googletest)
 add_subdirectory(tests)
 
 # Create application
 add_executable("udpclient" ${SOURCES} ${HEADERS})
-target_link_libraries("udpclient" PUBLIC versionInfo)
+target_link_libraries("udpclient" PUBLIC versionInfo fmt)
