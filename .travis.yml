@@ -3,6 +3,7 @@ language: cpp
 branches:
   only:
     - master
+    - develop
 
 matrix:
    include:
@@ -17,45 +18,39 @@ matrix:
        env: 
          - MATRIX_EVAL="CC=clang-10 && CXX=clang++-10"
      - os: osx
-       osx_image: xcode10.1
+       osx_image: xcode12.2
        compiler: clang
        env:
          - MATRIX_EVAL="CC=clang && CXX=clang++"
          
 before_install:
-  - git checkout master
+  - |
+    if [ $TRAVIS_EVENT_TYPE = 'pull_request' ]; then
+        export BRANCH=$TRAVIS_PULL_REQUEST_BRANCH
+    else
+        export BRANCH=$TRAVIS_BRANCH
+    fi
+  - echo ${BRANCH}
+  - git checkout $BRANCH
   - git submodule update --init --recursive
   - eval "${MATRIX_EVAL}"
 
-install: |
-  cmake_version_id="3.18"
-  cmake_version="3.18.4"
-  if [ "$TRAVIS_OS_NAME" == "linux" ]
-  then
-  # first we create a directory for the CMake binaries 
-  DEPS_DIR="${TRAVIS_BUILD_DIR}/deps"
-  mkdir ${DEPS_DIR} && cd ${DEPS_DIR}
-  # we use wget to fetch the cmake binaries
-  travis_retry wget --no-check-certificate "http://www.cmake.org/files/v${cmake_version_id}/cmake-$cmake_version-Linux-x86_64.tar.gz"
-  # extract the binaries; the output here is quite lengthy,
-  # so we swallow it to not clutter up the travis console
-  tar -xvf cmake-$cmake_version-Linux-x86_64.tar.gz > /dev/null
-  mv cmake-$cmake_version-Linux-x86_64 cmake-install
-  # add both the top-level directory and the bin directory from the archive
-  # to the system PATH. By adding it to the front of the path we hide the
-  # preinstalled CMake with our own.
-  PATH=${DEPS_DIR}/cmake-install:${DEPS_DIR}/cmake-install/bin:$PATH
-  # don't forget to switch back to the main build directory once you are done
-  cd ${TRAVIS_BUILD_DIR}
-  elif [ $TRAVIS_OS_NAME = osx ]
-  then
-  brew update
-  brew outdated cmake || brew upgrade cmake
-  fi
+install: #travis_wait 30 ./scripts/updatecmake.sh
+  - while sleep 60; do echo "=====[ $SECONDS seconds still running ]====="; done &
+  - ./scripts/updatecmake.sh
 
 script: 
   # - export CMAKE_OPTIONS=${CMAKE_OPTIONS}" -D CMAKE_CXX_COMPILER=${COMPILER}"
   # Check versions of gcc, g++ and cmake
+  #
+  # Warning: A newer Command Line Tools release is available.
+  # Update them from Software Update in the App Store or run:
+  # softwareupdate --all --install --force
+  
+  # If that doesn't show you an update run:
+  #   sudo rm -rf /Library/Developer/CommandLineTools
+  #   sudo xcode-select --install
+  - echo "going to start build"
   - gcc -v && g++ -v && cmake --version
   - mkdir build
   - cd build
