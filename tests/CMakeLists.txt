@@ -9,8 +9,6 @@ if (WIN32)
     option(GTEST_FORCE_SHARED_CRT "Use shared (DLL) run-time lib even when Google Test is built as static lib." ON)
 endif (WIN32)
 
-#add_subdirectory(googletest)
-
 macro(package_add_test TESTNAME)
     add_executable(${TESTNAME} ${ARGN})
     target_link_libraries(${TESTNAME} gtest gmock gtest_main versionInfo fmt)
@@ -19,7 +17,10 @@ macro(package_add_test TESTNAME)
 endmacro()
 
 package_add_test(${ProjectName}
+	${SOURCES}
 	UDPClient_tests.cpp
 	InstanceCounter_tests.cpp
-	SocketAddress_tests.cpp
+	Memvcmp_tests.cpp
+	Address_tests.cpp
+	Socket_tests.cpp
 	)

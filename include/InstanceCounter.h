@@ -1,10 +1,3 @@
-//
-//  InstanceCounter.h
-//  UDPServer
-//
-//  Created by roko on 04/05/2019.
-//
-
 #ifndef InstanceCounter_h
 #define InstanceCounter_h
 

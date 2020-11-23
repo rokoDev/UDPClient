@@ -1,11 +1,3 @@
-//
-//  main.cpp
-//  GTests
-//
-//  Created by roko on 7/22/16.
-//  Copyright © 2016 roko. All rights reserved.
-//
-
 #include <fmt/core.h>
 
 #include "GitInfo.h"

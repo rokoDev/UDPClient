@@ -29,24 +29,35 @@ elseif(CMAKE_CXX_COMPILER_ID STREQUAL AppleClang)
   set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++17 -Werror -pedantic-errors -Wall -Wextra -Wconversion -Wsign-conversion -Wshadow")
 endif()
 
+set(MAIN_INCLUDE_DIR ${CMAKE_CURRENT_LIST_DIR}/include)
+
 set(INCLUDE_DIRS
-	${CMAKE_SOURCE_DIR}/include
+	${MAIN_INCLUDE_DIR}
+	${CMAKE_CURRENT_LIST_DIR}/fmt/include
 	)
 set(HEADERS 
-	${CMAKE_SOURCE_DIR}/include/UDPClient.h
-	${CMAKE_SOURCE_DIR}/include/InstanceCounter.h
-	${CMAKE_SOURCE_DIR}/include/SocketAddress.h
-	${CMAKE_SOURCE_DIR}/include/CommonInclude.h
+	${MAIN_INCLUDE_DIR}/UDPClient.h
+	${MAIN_INCLUDE_DIR}/InstanceCounter.h
+	${MAIN_INCLUDE_DIR}/CommonInclude.h
+	${MAIN_INCLUDE_DIR}/Socket.h
+	${MAIN_INCLUDE_DIR}/NetUtils.h
+	${MAIN_INCLUDE_DIR}/FastPimpl.h
+	${MAIN_INCLUDE_DIR}/UDP.h
+	${MAIN_INCLUDE_DIR}/Address.h
+	${MAIN_INCLUDE_DIR}/NetException.h
 	)
 
 set(SOURCE_DIR ${CMAKE_SOURCE_DIR}/src)
 set(SOURCES
-	${SOURCE_DIR}/main.cpp
 	${SOURCE_DIR}/UDPClient.cpp
-	${SOURCE_DIR}/SocketAddress.cpp
+	${SOURCE_DIR}/NetUtils.cpp
+	${SOURCE_DIR}/UDP.cpp
+	${SOURCE_DIR}/Address.cpp
+	${SOURCE_DIR}/NetException.cpp
+	${SOURCE_DIR}/Socket.cpp
 	)
 
-include_directories("${INCLUDE_DIRS}" "${CMAKE_CURRENT_LIST_DIR}/fmt/include")
+include_directories("${INCLUDE_DIRS}")
 
 # Setup testing
 enable_testing()
@@ -55,5 +66,5 @@ add_subdirectory(googletest)
 add_subdirectory(tests)
 
 # Create application
-add_executable("udpclient" ${SOURCES} ${HEADERS})
+add_executable("udpclient" ${SOURCES} ${SOURCE_DIR}/main.cpp ${HEADERS})
 target_link_libraries("udpclient" PUBLIC versionInfo fmt)

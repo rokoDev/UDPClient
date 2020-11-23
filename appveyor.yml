@@ -28,8 +28,8 @@ install:
 before_build:
   - cmake -E make_directory build
   - cd build
-  - ps: |
-      clang-cl /?
+  # - ps: |
+  #     clang-cl /?
   - cmake -G "Visual Studio 16 2019" -A x64 -T ClangCL ..
 
 build:
