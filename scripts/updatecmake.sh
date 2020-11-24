@@ -1,7 +1,7 @@
 #!/bin/sh
 cmake_version_id="3.18"
 cmake_version="3.18.4"
-if [ "$TRAVIS_OS_NAME" == "linux" ]
+if [ $TRAVIS_OS_NAME == linux ]
 then
   # first we create a directory for the CMake binaries 
   DEPS_DIR="${TRAVIS_BUILD_DIR}/deps"
