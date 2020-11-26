@@ -33,7 +33,7 @@ before_install:
         export BRANCH=$TRAVIS_BRANCH
     fi
   - echo ${BRANCH}
-  - git checkout $BRANCH
+  - git checkout $TRAVIS_BRANCH
   - git submodule update --init --recursive
   - eval "${MATRIX_EVAL}"
 
