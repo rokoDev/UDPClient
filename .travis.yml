@@ -4,6 +4,7 @@ branches:
   only:
     - master
     - develop
+    - $TRAVIS_PULL_REQUEST_BRANCH
 
 matrix:
    include:
