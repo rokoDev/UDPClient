@@ -29,12 +29,15 @@ matrix:
 before_install:
   - |
     if [ $TRAVIS_EVENT_TYPE = 'pull_request' ]; then
-        export BRANCH=$TRAVIS_PULL_REQUEST_BRANCH
+        pr_branch="pr_${TRAVIS_PULL_REQUEST}_${TRAVIS_PULL_REQUEST_BRANCH}"
+        echo pr_branch
+        git fetch origin pull/$TRAVIS_PULL_REQUEST/head:pr_branch
+        git checkout pr_branch
     else
         export BRANCH=$TRAVIS_BRANCH
     fi
-  - echo ${TRAVIS_PULL_REQUEST_BRANCH}
-  - git fetch origin pull/1/head && git checkout FETCH_HEAD
+  # - echo ${TRAVIS_PULL_REQUEST_BRANCH}
+  # - git fetch origin pull/1/head && git checkout FETCH_HEAD
   # - git checkout $TRAVIS_PULL_REQUEST_BRANCH
   - git submodule update --init --recursive
   - eval "${MATRIX_EVAL}"
