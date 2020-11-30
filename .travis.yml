@@ -34,7 +34,8 @@ before_install:
         export BRANCH=$TRAVIS_BRANCH
     fi
   - echo ${TRAVIS_PULL_REQUEST_BRANCH}
-  - git checkout $TRAVIS_PULL_REQUEST_BRANCH
+  - git fetch origin pull/1/head && git checkout FETCH_HEAD
+  # - git checkout $TRAVIS_PULL_REQUEST_BRANCH
   - git submodule update --init --recursive
   - eval "${MATRIX_EVAL}"
 
