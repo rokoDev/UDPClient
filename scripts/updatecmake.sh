@@ -1,10 +1,4 @@
 #!/bin/sh
-
-# fail script immediately on any errors in external commands
-set -e
-
-source travis_retry.sh
-
 cmake_version_id="3.18"
 cmake_version="3.18.4"
 if [ $TRAVIS_OS_NAME = linux ]
@@ -13,7 +7,8 @@ then
   DEPS_DIR="${TRAVIS_BUILD_DIR}/deps"
   mkdir ${DEPS_DIR} && cd ${DEPS_DIR}
   # we use wget to fetch the cmake binaries
-  travis_retry wget --no-check-certificate "http://www.cmake.org/files/v${cmake_version_id}/cmake-$cmake_version-Linux-x86_64.tar.gz"
+  # wget --no-check-certificate "http://www.cmake.org/files/v${cmake_version_id}/cmake-$cmake_version-Linux-x86_64.tar.gz"
+  curl "http://www.cmake.org/files/v${cmake_version_id}/cmake-$cmake_version-Linux-x86_64.tar.gz"
   # extract the binaries; the output here is quite lengthy,
   # so we swallow it to not clutter up the travis console
   tar -xvf cmake-$cmake_version-Linux-x86_64.tar.gz > /dev/null
