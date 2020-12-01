@@ -32,32 +32,20 @@ before_install:
     then
         export BRANCH="pr_${TRAVIS_PULL_REQUEST}_${TRAVIS_PULL_REQUEST_BRANCH}"
         git fetch origin pull/$TRAVIS_PULL_REQUEST/head:$BRANCH
-        git checkout $BRANCH
     else
         export BRANCH=$TRAVIS_BRANCH
     fi
   - echo $BRANCH
-  # - echo ${TRAVIS_PULL_REQUEST_BRANCH}
-  # - git fetch origin pull/1/head && git checkout FETCH_HEAD
-  # - git checkout $TRAVIS_PULL_REQUEST_BRANCH
+  - git checkout $BRANCH
   - git submodule update --init --recursive
   - eval "${MATRIX_EVAL}"
 
 install: #travis_wait 30 ./scripts/updatecmake.sh
+  - cmake -version
   - while sleep 60; do echo "=====[ $SECONDS seconds still running ]====="; done &
   - ./scripts/updatecmake.sh
 
 script: 
-  # - export CMAKE_OPTIONS=${CMAKE_OPTIONS}" -D CMAKE_CXX_COMPILER=${COMPILER}"
-  # Check versions of gcc, g++ and cmake
-  #
-  # Warning: A newer Command Line Tools release is available.
-  # Update them from Software Update in the App Store or run:
-  # softwareupdate --all --install --force
-  
-  # If that doesn't show you an update run:
-  #   sudo rm -rf /Library/Developer/CommandLineTools
-  #   sudo xcode-select --install
   - echo "going to start build"
   - gcc -v && g++ -v && cmake --version
   - mkdir build
