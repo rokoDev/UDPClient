@@ -1,4 +1,10 @@
 #!/bin/sh
+
+# fail script immediately on any errors in external commands
+set -e
+
+source travis_retry.sh
+
 cmake_version_id="3.18"
 cmake_version="3.18.4"
 if [ $TRAVIS_OS_NAME = linux ]
