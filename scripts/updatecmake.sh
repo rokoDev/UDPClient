@@ -17,7 +17,7 @@ then
   # add both the top-level directory and the bin directory from the archive
   # to the system PATH. By adding it to the front of the path we hide the
   # preinstalled CMake with our own.
-  PATH=${DEPS_DIR}/cmake-install:${DEPS_DIR}/cmake-install/bin:$PATH
+  export PATH=${DEPS_DIR}/cmake-install:${DEPS_DIR}/cmake-install/bin:$PATH
   # don't forget to switch back to the main build directory once you are done
   cd ${TRAVIS_BUILD_DIR}
 elif [ $TRAVIS_OS_NAME = osx ]
