@@ -8,7 +8,8 @@ then
   mkdir ${DEPS_DIR} && cd ${DEPS_DIR}
   # we use wget to fetch the cmake binaries
   # wget --no-check-certificate "http://www.cmake.org/files/v${cmake_version_id}/cmake-$cmake_version-Linux-x86_64.tar.gz"
-  curl -L -i "http://www.cmake.org/files/v${cmake_version_id}/cmake-$cmake_version-Linux-x86_64.tar.gz" --output "cmake-$cmake_version-Linux-x86_64.tar.gz"
+  curl -LOJ "http://www.cmake.org/files/v${cmake_version_id}/cmake-$cmake_version-Linux-x86_64.tar.gz"
+  file "cmake-$cmake_version-Linux-x86_64.tar.gz"
   # extract the binaries; the output here is quite lengthy,
   # so we swallow it to not clutter up the travis console
   tar -xvf cmake-$cmake_version-Linux-x86_64.tar.gz > /dev/null
