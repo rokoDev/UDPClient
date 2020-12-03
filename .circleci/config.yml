@@ -16,12 +16,22 @@ jobs:
       - run:
           name: Install Software
           command: |
+            cmake_version_id="3.18"
+            cmake_build_id="4"
+            pwd
+
             echo "OS info:"
             lsb_release -a
+
             echo "CMake info:"
             cmake --version
-            echo "Clang info:"
-            clang --version
+
+            sudo apt-get remove cmake
+      #      curl -LOJ "http://www.cmake.org/files/v${cmake_version_id}/cmake-$cmake_version_id.$cmake_build_id-Linux-x86_64.sh"
+      #      sudo mkdir /opt/cmake
+      #      sudo sh cmake-$cmake_version_id.$cmake_build_id-Linux-x86_64.sh --prefix=/opt/cmake
+      #      sudo ln -s /opt/cmake/bin/cmake /usr/local/bin/cmake
+
       #       sudo apt-get update
       #       sudo apt-get install -y software-properties-common apt-transport-https curl
       #       curl -s https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
