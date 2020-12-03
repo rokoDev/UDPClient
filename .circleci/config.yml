@@ -18,6 +18,7 @@ jobs:
           command: |
             cmake_version_id="3.18"
             cmake_build_id="4"
+            echo "Current path:"
             pwd
 
             echo "OS info:"
@@ -26,11 +27,13 @@ jobs:
             echo "CMake info:"
             cmake --version
 
-            sudo apt-get remove cmake
-            curl -LOJ "http://www.cmake.org/files/v${cmake_version_id}/cmake-$cmake_version_id.$cmake_build_id-Linux-x86_64.sh"
-            sudo mkdir /opt/cmake
-            sudo sh cmake-$cmake_version_id.$cmake_build_id-Linux-x86_64.sh --prefix=/opt/cmake
-            sudo ln -s /opt/cmake/bin/cmake /usr/local/bin/cmake
+            curl -LOJ "http://www.cmake.org/files/v${cmake_version_id}/cmake-${cmake_version_id}.${cmake_build_id}.tar.gz"
+            tar -xvf cmake-${cmake_version_id}.${cmake_build_id}.tar.gz
+            cd cmake-${cmake_version_id}.${cmake_build_id}
+            sudo ./bootsrap
+            make
+            make install
+            cmake --version
 
       #       sudo apt-get update
       #       sudo apt-get install -y software-properties-common apt-transport-https curl
