@@ -39,3 +39,6 @@ workflows:
   run-all:
     jobs:
       - linux-clang
+          filters:
+            branches:
+              only: CLIENT-13
