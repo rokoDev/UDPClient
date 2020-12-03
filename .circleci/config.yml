@@ -29,9 +29,9 @@ jobs:
 
             sudo apt-get remove cmake
 
-            curl -LOJ "http://www.cmake.org/files/v${cmake_version_id}/cmake-${cmake_version_id}.${cmake_build_id}.tar.gz"
-            tar -xvf cmake-${cmake_version_id}.${cmake_build_id}.tar.gz
-            cd cmake-${cmake_version_id}.${cmake_build_id}
+            curl -LOJ "http://www.cmake.org/files/v3.18/cmake-3.18.4.tar.gz"
+            tar -xvf cmake-3.18.4.tar.gz
+            cd cmake-3.18.4
             sudo ./bootsrap
             make
             make install
