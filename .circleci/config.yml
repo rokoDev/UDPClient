@@ -17,7 +17,7 @@ jobs:
           name: Install Software
           command: |
             echo "OS info:"
-            cat etc/os-release
+            lsb_release -a
             echo "CMake info:"
             cmake --version
             echo "Clang info:"
