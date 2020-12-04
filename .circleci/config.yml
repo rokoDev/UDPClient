@@ -29,7 +29,14 @@ jobs:
 
             sudo apt-get remove cmake
 
+            echo "start download cmake"
             curl -LOJ "http://www.cmake.org/files/v3.18/cmake-3.18.4.tar.gz"
+            echo "finish download cmake"
+
+            stat "cmake-3.18.4.tar.gz"
+            file "cmake-3.18.4.tar.gz"
+
+            echo "unpack cmake"
             tar -zxvf cmake-3.18.4.tar.gz
             cd cmake-3.18.4
             sudo ./bootsrap
