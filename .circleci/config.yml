@@ -17,7 +17,7 @@ jobs:
           name: Install Software
           command: |
             cmake_version_id="3.18"
-            cmake_build_id="4"
+            cmake_build_id="5"
             echo "Current path:"
             pwd
 
@@ -30,15 +30,15 @@ jobs:
             sudo apt-get remove cmake
 
             echo "start download cmake"
-            wget --no-check-certificate "http://www.cmake.org/files/v3.18/cmake-3.18.4.tar.gz"
+            curl -LOJ "https://github.com/Kitware/CMake/releases/download/v3.18.5/cmake-3.18.5.tar.gz"
             echo "finish download cmake"
 
-            stat "cmake-3.18.4.tar.gz"
-            file "cmake-3.18.4.tar.gz"
+            stat "cmake-3.18.5.tar.gz"
+            file "cmake-3.18.5.tar.gz"
 
             echo "unpack cmake"
-            tar -zxvf cmake-3.18.4.tar.gz
-            cd cmake-3.18.4
+            tar -zxvf cmake-3.18.5.tar.gz
+            cd cmake-3.18.5
             sudo ./bootsrap
             make
             make install
