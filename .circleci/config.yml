@@ -37,9 +37,9 @@ jobs:
             file "cmake-3.18.5.tar.gz"
 
             echo "unpack cmake"
-            tar -zxvf cmake-3.18.5.tar.gz
+            tar -zxvf cmake-3.18.5.tar.gz > /dev/null
             cd cmake-3.18.5
-            sudo ./bootsrap
+            sudo ./bootstrap
             make
             make install
             cmake --version
