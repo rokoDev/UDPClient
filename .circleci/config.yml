@@ -1,15 +1,12 @@
 version: 2.1
 
-# orbs:
-#   win: circleci/windows@2.4.0
-
 jobs:
   linux-clang:
     machine:
-      image: ubuntu-2004:202010-01
+      image: rokodev/ubuntu2004clang11cmake:1.0
     environment:
-      CC: clang-10
-      CXX: clang++-10
+      CC: clang
+      CXX: clang++
       CXXFLAGS: -stdlib=libc++
     steps:
       - checkout
@@ -27,22 +24,14 @@ jobs:
             echo "CMake info:"
             cmake --version
 
-            sudo apt-get remove cmake
-
-            echo "start download cmake"
-            curl -LOJ "https://github.com/Kitware/CMake/releases/download/v3.18.5/cmake-3.18.5.tar.gz"
-            echo "finish download cmake"
-
-            stat "cmake-3.18.5.tar.gz"
-            file "cmake-3.18.5.tar.gz"
-
-            echo "unpack cmake"
-            tar -zxvf cmake-3.18.5.tar.gz > /dev/null
-            cd cmake-3.18.5
-            sudo ./bootstrap
-            make
-            make install
-            cmake --version
+            git checkout CLIENT-13
+            git submodule update --init --recursive
+            
+            cd UDPClient
+            mkdir build
+            cd build
+            cmake .. && make
+            ctest -VV --output-on-failure -C Debug            
 
       #       sudo apt-get update
       #       sudo apt-get install -y software-properties-common apt-transport-https curl
