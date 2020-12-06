@@ -32,11 +32,11 @@ jobs:
             cmake --version
             
             git clone https://github.com/rokoDev/UDPClient.git
+            cd UDPClient
+            pwd
             git checkout CLIENT-13
             git submodule update --init --recursive
             
-            cd UDPClient
-            pwd
             mkdir build
             cd build
             cmake .. && make
