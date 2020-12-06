@@ -3,7 +3,7 @@ version: 2.1
 jobs:
   linux-clang:
     machine:
-      image: rokodev/ubuntu2004clang11cmake:1.0
+      image: rokodev/ubuntufocalclang:1.0
     environment:
       CC: clang
       CXX: clang++
