@@ -37,9 +37,16 @@ jobs:
             git checkout CLIENT-13
             git submodule update --init --recursive
             
+            echo "going to mkdir build"
             mkdir build
+
+            echo "going to cd build"
             cd build
+
+            echo "going to build"
             cmake .. && make
+
+            echo "going to run tests"
             ctest -VV --output-on-failure -C Debug            
 
       #       sudo apt-get update
