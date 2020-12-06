@@ -1,9 +1,16 @@
 version: 2.1
 
+# jobs:
+#   linux-clang:
+#     machine:
+#       image: rokodev/ubuntufocalclang:1.0
 jobs:
-  linux-clang:
-    machine:
-      image: rokodev/ubuntufocalclang:1.0
+  build:
+    docker:
+      - image: rokodev/ubuntufocalclang:1.0
+        auth:
+          username: $DOCKERHUB_LOGIN
+          password: $DOCKERHUB_PASSWORD
     environment:
       CC: clang
       CXX: clang++
