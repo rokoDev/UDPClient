@@ -88,7 +88,7 @@ void Address::addressFamily(const eAddressFamily aFamily)
 
 uint8_t Address::addressFamilySys() const noexcept
 {
-    return _sockaddr.sa.sa_family;
+    return static_cast<uint8_t>(_sockaddr.sa.sa_family);
 }
 
 void Address::addressFamily(const uint8_t aFamily)
