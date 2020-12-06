@@ -16,7 +16,7 @@ jobs:
       CXX: clang++
       CXXFLAGS: -stdlib=libc++
     steps:
-      - checkout
+      #- checkout
       - run:
           name: Install Software
           command: |
@@ -30,11 +30,13 @@ jobs:
 
             echo "CMake info:"
             cmake --version
-
+            
+            git clone https://github.com/rokoDev/UDPClient.git
             git checkout CLIENT-13
             git submodule update --init --recursive
             
             cd UDPClient
+            pwd
             mkdir build
             cd build
             cmake .. && make
