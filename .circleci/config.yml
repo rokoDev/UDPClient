@@ -56,7 +56,7 @@ workflows:
   version: 2
   run-all:
     jobs:
-      - linux-clang:
+      - build:
           filters:
             branches:
               only: CLIENT-13
