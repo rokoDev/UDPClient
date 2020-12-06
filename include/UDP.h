@@ -15,7 +15,7 @@ class SocketAddress;
 class UDP final
 {
    public:
-    using Socket = Socket<UDP, details::SocketFuncs>;
+    using Socket = net::Socket<UDP, details::SocketFuncs>;
 
     static UDP V4() noexcept;
     static UDP V6() noexcept;
