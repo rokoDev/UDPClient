@@ -75,7 +75,8 @@ Address::Address(const sockaddr &aSockaddr) : Address()
 
 eAddressFamily Address::addressFamily() const noexcept
 {
-    return AddressFamilySystemToUser.at(_sockaddr.sa.sa_family);
+    return AddressFamilySystemToUser.at(
+        static_cast<uint8_t>(_sockaddr.sa.sa_family));
 }
 
 void Address::addressFamily(const eAddressFamily aFamily)
