@@ -22,19 +22,17 @@ jobs:
             git submodule update --init --recursive
 
       - run:
-          name: Create build directory
-          command: |
-            mkdir build
-            cd build
-
-      - run:
           name: Build Project
           command: |
+            cd UDPClient
+            mkdir build
             cmake .. && make
 
       - run:
           name: Run Tests
           command: |
+            cd UDPClient
+            mkdir build
             ctest -VV --output-on-failure -C Debug            
 
 workflows:
