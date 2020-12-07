@@ -1,9 +1,5 @@
 version: 2.1
 
-# jobs:
-#   linux-clang:
-#     machine:
-#       image: rokodev/ubuntufocalclang:1.0
 jobs:
   build:
     docker:
@@ -16,50 +12,30 @@ jobs:
       CXX: clang++
       CXXFLAGS: -stdlib=libc++
     steps:
-      #- checkout
       - run:
-          name: Install Software
+          name: Checkout sources
           command: |
-            cmake_version_id="3.18"
-            cmake_build_id="5"
-            echo "Current path:"
-            pwd
-
-            echo "OS info:"
-            lsb_release -a
-
-            echo "CMake info:"
-            cmake --version
-            
             git clone https://github.com/rokoDev/UDPClient.git
             cd UDPClient
             pwd
             git checkout CLIENT-13
             git submodule update --init --recursive
-            
-            echo "going to mkdir build"
-            mkdir build
 
-            echo "going to cd build"
+      - run:
+          name: Create build directory
+          command: |
+            mkdir build
             cd build
 
-            echo "going to build"
+      - run:
+          name: Build Project
+          command: |
             cmake .. && make
 
-            echo "going to run tests"
+      - run:
+          name: Run Tests
+          command: |
             ctest -VV --output-on-failure -C Debug            
-
-      #       sudo apt-get update
-      #       sudo apt-get install -y software-properties-common apt-transport-https curl
-      #       curl -s https://apt.llvm.org/llvm-snapshot.gpg.key | sudo apt-key add -
-      #       curl -s https://apt.kitware.com/keys/kitware-archive-latest.asc | sudo apt-key add -
-      #       sudo apt-add-repository -y 'deb http://apt.llvm.org/xenial/ llvm-toolchain-xenial-9 main'
-      #       sudo apt-add-repository -y 'deb https://apt.kitware.com/ubuntu/ xenial main'
-      #       sudo apt-get update
-      #       sudo apt-get install -y ninja-build git unzip cmake clang-9 libc++-9-dev libc++abi-9-dev
-      # - run: /bin/bash .ci/install-vcpkg.sh "$HOME/project"
-      # - run: /bin/bash .ci/build-project.sh
-      # - run: ./build/example_simple
 
 workflows:
   version: 2
