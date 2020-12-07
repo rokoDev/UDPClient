@@ -7,16 +7,16 @@ branches:
 
 matrix:
    include:
-     - os: linux
-       name: Linux Clang 10
-       dist: focal
-       compiler: clang
-       addons:
-         apt:
-           packages:
-             - clang-10
-       env: 
-         - MATRIX_EVAL="CC=clang-10 && CXX=clang++-10"
+     # - os: linux
+     #   name: Linux Clang 10
+     #   dist: focal
+     #   compiler: clang
+     #   addons:
+     #     apt:
+     #       packages:
+     #         - clang-10
+     #   env: 
+     #     - MATRIX_EVAL="CC=clang-10 && CXX=clang++-10"
      - os: osx
        osx_image: xcode12.2
        compiler: clang
