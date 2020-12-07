@@ -16,23 +16,22 @@ jobs:
           name: Checkout sources
           command: |
             git clone https://github.com/rokoDev/UDPClient.git
-            cd UDPClient
-            pwd
+            cd ./UDPClient
             git checkout CLIENT-13
             git submodule update --init --recursive
 
       - run:
           name: Build Project
           command: |
-            cd UDPClient
+            cd ./UDPClient
             mkdir build
+            cd ./build
             cmake .. && make
 
       - run:
           name: Run Tests
           command: |
-            cd UDPClient
-            mkdir build
+            cd ./UDPClient/build
             ctest -VV --output-on-failure -C Debug            
 
 workflows:
