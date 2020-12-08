@@ -41,4 +41,6 @@ workflows:
       - build:
           filters:
             branches:
-              only: CLIENT-13
+              only:
+                - master
+                - develop
