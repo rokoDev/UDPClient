@@ -23,7 +23,8 @@ endif()
 
 list(APPEND CMAKE_MODULE_PATH "${CMAKE_CURRENT_LIST_DIR}/VersionHelper")
 include(VersionInfoUtils)
-m_generate_version_info_sources_by_project_name(MY_PROJECT_NAME ${ProjectName})
+set(ClientNS "client")
+m_generate_version_info_sources_by_project_name(MY_PROJECT_NAME ${ClientNS})
 		
 message(STATUS "CMAKE_CXX_COMPILER: ${CMAKE_CXX_COMPILER}")
 message(STATUS "CMAKE_CXX_COMPILER_ID: ${CMAKE_CXX_COMPILER_ID}")
@@ -72,35 +73,27 @@ set(INCLUDE_DIRS
 	${CMAKE_CURRENT_LIST_DIR}/fmt/include
 	)
 set(HEADERS 
-	${MAIN_INCLUDE_DIR}/UDPClient.h
 	${MAIN_INCLUDE_DIR}/InstanceCounter.h
-	${MAIN_INCLUDE_DIR}/CommonInclude.h
-	${MAIN_INCLUDE_DIR}/Socket.h
-	${MAIN_INCLUDE_DIR}/NetUtils.h
-	${MAIN_INCLUDE_DIR}/FastPimpl.h
-	${MAIN_INCLUDE_DIR}/UDP.h
-	${MAIN_INCLUDE_DIR}/Address.h
-	${MAIN_INCLUDE_DIR}/NetException.h
 	)
 
 set(SOURCE_DIR ${CMAKE_SOURCE_DIR}/src)
-set(SOURCES
-	${SOURCE_DIR}/UDPClient.cpp
-	${SOURCE_DIR}/NetUtils.cpp
-	${SOURCE_DIR}/UDP.cpp
-	${SOURCE_DIR}/Address.cpp
-	${SOURCE_DIR}/NetException.cpp
-	${SOURCE_DIR}/Socket.cpp
-	)
 
 include_directories("${INCLUDE_DIRS}")
 
+if(NOT TARGET fmt)
+  add_subdirectory(fmt)
+endif()
+
+add_subdirectory(ndt)
+
 # Setup testing
 enable_testing()
-add_subdirectory(fmt)
 add_subdirectory(googletest)
 add_subdirectory(tests)
 
 # Create application
-add_executable("udpclient" ${SOURCES} ${SOURCE_DIR}/main.cpp ${HEADERS})
-target_link_libraries("udpclient" PUBLIC versionInfo fmt)
+set(ExecutableName "udpclient")
+add_executable(${ExecutableName} ${SOURCE_DIR}/main.cpp ${HEADERS})
+target_link_libraries(${ExecutableName} PUBLIC "${ClientNS}_versionInfo" fmt ndt)
+target_compile_definitions(${ExecutableName} PUBLIC $<$<CONFIG:Release>:RELEASE> $<$<CONFIG:Debug>:DEBUG>)
+target_compile_options(${ExecutableName} PRIVATE ${ALL_CXX_FLAGS})

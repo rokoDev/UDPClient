@@ -1,5 +1,6 @@
 cmake_minimum_required(VERSION ${cmake_version})
 
+set(outProjectName ${ProjectName})
 set(ProjectName ${ProjectName}_tests)
 project(${ProjectName})
 
@@ -11,16 +12,11 @@ endif (WIN32)
 
 macro(package_add_test TESTNAME)
     add_executable(${TESTNAME} ${ARGN})
-    target_link_libraries(${TESTNAME} gtest gmock gtest_main versionInfo fmt)
+    target_link_libraries(${TESTNAME} gtest gmock gtest_main "${ClientNS}_versionInfo" fmt ndt)
     add_test(NAME ${TESTNAME} COMMAND ${TESTNAME})
     set_target_properties(${TESTNAME} PROPERTIES FOLDER tests)
 endmacro()
 
 package_add_test(${ProjectName}
-	${SOURCES}
-	UDPClient_tests.cpp
-	InstanceCounter_tests.cpp
-	Memvcmp_tests.cpp
-	Address_tests.cpp
-	Socket_tests.cpp
+	main_tests.cpp
 	)

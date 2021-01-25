@@ -36,6 +36,7 @@ jobs:
             git checkout --recurse-submodules ${BRANCH}
             git submodule foreach --recursive git checkout master
             git submodule update --init --recursive
+            git submodule foreach --recursive git switch master
       - run:
           name: "configure build test Ninja Debug"
           command: |

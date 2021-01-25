@@ -32,6 +32,7 @@ install:
           echo ("Branch <"+"$BRANCH"+"> will be cloned") 2> $null
           git clone -b $BRANCH --single-branch $CLONE_URL 2> $null
           cd "$env:APPVEYOR_BUILD_FOLDER" 2> $null
+          $BRANCH = "master"
       }
       else
       {
@@ -43,8 +44,8 @@ install:
           echo ("REMOTETOLOCAL: "+"$REMOTETOLOCAL") 2> $null
           git fetch origin "$REMOTETOLOCAL" 2> $null
       }
-      git checkout --recurse-submodules $BRANCH 2> $null
-      git submodule foreach --recursive git checkout master 2> $null
+      git checkout --recurse-submodules 2> $null
+      git submodule foreach --recursive git switch master 2> $null
   - cmd: git submodule update --init --recursive
   - ps: |
       $CUR_BRANCH_NAME = git branch --show-current
@@ -77,6 +78,7 @@ install:
 before_build:
   - cmake --version
   - C:\Tools\vcpkg\vcpkg.exe integrate remove
+  - git submodule foreach --recursive git switch master
   - cmake -E make_directory build
   - cd build
   - echo %PATH%
