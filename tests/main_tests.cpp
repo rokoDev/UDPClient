@@ -1,32 +1,14 @@
 #include <fmt/format.h>
-#include <ndt/GitInfo.h>
 #include <ndt/utils.h>
+#include <ndt/version_info.h>
 
-#include "client/GitInfo.h"
-#include "client/Version.h"
+#include "client/version_info.h"
 #include "gtest/gtest.h"
-
-TEST(TestClientVersion, GitInfoTest)
-{
-    fmt::print("[          ] branch: {}\n", client::GitInfo::branch());
-    fmt::print("[          ] SHA1: {}\n", client::GitInfo::SHA1());
-    const std::string isDirty =
-        client::GitInfo::isDirty() ? std::string("true") : std::string("false");
-    fmt::print("[          ] IS_DIRTY: {}\n\n\n", isDirty);
-
-    fmt::print("[          ] build type: {}\n", ndt::kBuildTypeCStr);
-    fmt::print("[          ] branch: {}\n", ndt::GitInfo::branch());
-    fmt::print("[          ] SHA1: {}\n", ndt::GitInfo::SHA1());
-    const std::string isNDTDirty =
-        ndt::GitInfo::isDirty() ? std::string("true") : std::string("false");
-    fmt::print("[          ] IS_DIRTY: {}\n", isNDTDirty);
-
-    ASSERT_EQ(0, 0);
-}
 
 TEST(TestClientVersion, VersionTest)
 {
-    fmt::print("[          ] client Version: {}\n", client::Version::str());
+    fmt::print("{}", client::version_info());
+    fmt::print("{}", ndt::version_info());
     ASSERT_EQ(0, 0);
 }
 

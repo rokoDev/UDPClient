@@ -1,34 +1,24 @@
 #include <fmt/format.h>
-#include <ndt/GitInfo.h>
-#include <ndt/Version.h>
 #include <ndt/address.h>
 #include <ndt/socket.h>
 #include <ndt/udp.h>
 #include <ndt/utils.h>
+#include <ndt/version_info.h>
 
 #include <iostream>
 
-#include "client/GitInfo.h"
-#include "client/Version.h"
+#include "client/version_info.h"
 
 #define SERVER "127.0.0.1"
 #define BUFLEN 512  // Max length of buffer
 #define PORT 8888   // The port on which to send data
 
-void printVersionInfo()
-{
-    fmt::print("Version: {}\n", client::Version::str());
-    fmt::print("branch: {}\n", client::GitInfo::branch());
-    fmt::print("SHA1: {}\n", client::GitInfo::SHA1());
-    const std::string isDirty =
-        client::GitInfo::isDirty() ? std::string("true") : std::string("false");
-    fmt::print("IS_DIRTY: {}\n", isDirty);
-}
-
 int main(void)
 {
     try
     {
+        fmt::print("{}", client::version_info());
+        fmt::print("{}", ndt::version_info());
         std::string userMsg;
         ndt::UDP::Socket s = ndt::UDP::Socket(ndt::UDP::V4(), 111);
         ndt::Address sender;
