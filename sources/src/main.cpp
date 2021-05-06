@@ -1,9 +1,5 @@
 #include <fmt/format.h>
-#include <ndt/address.h>
-#include <ndt/socket.h>
-#include <ndt/udp.h>
-#include <ndt/utils.h>
-#include <ndt/version_info.h>
+#include <ndt/core.h>
 
 #include <iostream>
 
@@ -20,7 +16,8 @@ int main(void)
         fmt::print("{}", client::version_info());
         fmt::print("{}", ndt::version_info());
         std::string userMsg;
-        ndt::UDP::Socket s = ndt::UDP::Socket(ndt::UDP::V4(), 111);
+        ndt::Context<ndt::System> ctx;
+        ndt::UDP::Socket s = ndt::UDP::Socket(ctx, ndt::UDP::V4(), 111);
         ndt::Address sender;
         const std::size_t kBufSize = 512;
         char buf[kBufSize] = {0};
@@ -35,25 +32,26 @@ int main(void)
                 s.close();
                 break;
             }
-            s.sendTo(ndt::Address(ndt::kIPv4Loopback, PORT), userMsg.data(),
-                     userMsg.size());
-            const auto bytesRecieved = s.recvFrom(buf, kBufSize, sender);
+            s.sendTo(ndt::Address(ndt::kIPv4Loopback, PORT),
+                     ndt::CBuffer(userMsg.data(), userMsg.size()));
+            ndt::Buffer recvBuf(buf);
+            const auto bytesRecieved = s.recvFrom(recvBuf, sender);
             buf[bytesRecieved] = '\0';
+
+            // print details of the the data received
             fmt::print("Recieved from: {}\n", sender.port());
-            fmt::print("Content: {}", (char *)(buf));
+            fmt::print("\n{} bytes received: {}", recvBuf.size(),
+                       fmt::format("{:.{}}", buf, recvBuf.size()));
         }
     }
-    catch (const ndt::exception::RuntimeError &re)
+    catch (const ndt::Error &e)
     {
-        std::cout << re;
-    }
-    catch (const ndt::exception::LogicError &le)
-    {
-        std::cout << le;
+        fmt::print("ndt::Error >> code: {}. reason: {}\n", e.code().value(),
+                   e.what());
     }
     catch (std::exception &e)
     {
-        fmt::print("Error: {}\n", e.what());
+        fmt::print("Error >> reason: {}\n", e.what());
     }
     catch (...)
     {
